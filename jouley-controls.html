@@ -1,0 +1,72 @@
+<link rel="import" href="../polymer/polymer.html">
+<link rel="import" href="../jouley-control-button/jouley-control-button.html">
+<dom-module id="jouley-controls">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+    </style>
+    <template is="dom-if" if="[[!controls]]">
+      <template is="dom-if" if="[[!_computePlaying(playing, paused)]]">
+        <jouley-control-button control="play"></jouley-control-button>
+      </template>
+      <template is="dom-if" if="[[_computePlaying(playing, paused)]]">
+        <jouley-control-button control="pause"></jouley-control-button>
+      </template>
+    </template>
+    <paper-progress value="10"></paper-progress>
+    <template is="dom-if" if="[[controls]]">
+      <template is="dom-if" if="[[!_computePlaying(playing, paused)]]">
+        <jouley-control-button control="play"></jouley-control-button>
+      </template>
+      <template is="dom-if" if="[[_computePlaying(playing, paused)]]">
+        <jouley-control-button control="pause"></jouley-control-button>
+      </template>
+      <jouley-control-button control="stop"></jouley-control-button>
+    </template>
+  </template>
+  <script>
+    (function() {
+      'use strict';
+
+      Polymer({
+        is: 'jouley-controls',
+
+        properties: {
+
+          /**
+           * whether or not the controls are shown
+           */
+          controls: {
+            type: Boolean,
+            value: false
+          },
+
+          /**
+           * whether or not audio is playing
+           */
+          playing: {
+            type: Boolean,
+            value: false
+          },
+
+          /**
+           * whether or not audio is playing
+           */
+          paused: {
+            type: Boolean,
+            value: false
+          }
+        },
+
+        _computePlaying: function(playing, paused) {
+          if (paused || !playing) {
+            return false;
+          }
+          return true;
+        }
+      });
+    })();
+  </script>
+</dom-module>
